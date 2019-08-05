@@ -9,9 +9,9 @@ const _focusIndex = Symbol("focusIndex"),
     _setFocusIndex = Symbol("_setFocusIndex");
 
 class HTMLNumberCodeElement extends BaseComponent {
-    [_value] = "";
-    [_preLi] = null;
-    [_focusIndex] = 0;
+    // [_value] = "";
+    // [_preLi] = null;
+    // [_focusIndex] = 0;
 
     static get template() {
         return `
@@ -75,6 +75,9 @@ class HTMLNumberCodeElement extends BaseComponent {
 
     constructor() {
         super();
+        this[_value] = "";
+        this[_preLi] = null;
+        this[_focusIndex] = 0;
     }
 
     connectedCallback() {

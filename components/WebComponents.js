@@ -5,7 +5,7 @@ const _renderResolve = Symbol("_renderResolve");
 const _renderReject = Symbol("_renderReject");
 
 export class BaseComponent extends HTMLElement {
-    shadowRoot = null;
+    _shadowRoot = null;
     mode = "closed";
 
     [_listeners] = [];
@@ -17,6 +17,10 @@ export class BaseComponent extends HTMLElement {
 
     constructor() {
         super();
+        // this._shadowRoot = null;
+        // this.mode = "closed";
+        // this[_listeners] = [];
+        // this[_initialize] = false;
         this[_renderPromise] = new Promise((resolve, reject) => {
             this[_renderResolve] = resolve;
             this[_renderReject] = reject;
@@ -25,14 +29,14 @@ export class BaseComponent extends HTMLElement {
 
     connectedCallback() {
         if (!this[_initialize]) {
-            const shadowRoot = this.attachShadow({
+            const _shadowRoot = this.attachShadow({
                 mode: this.mode
             });
-            this.shadowRoot = shadowRoot;
+            this._shadowRoot = _shadowRoot;
             this[_initialize] = true;
-            appendTemplate(this, this.shadowRoot, this.constructor.template);
+            appendTemplate(this, this._shadowRoot, this.constructor.template);
             this.rendered();
-            this[_renderResolve](shadowRoot)
+            this[_renderResolve](_shadowRoot)
         }
     }
 
@@ -47,7 +51,7 @@ export class BaseComponent extends HTMLElement {
         })
     }
 
-    // render(shadowRoot) {
+    // render(_shadowRoot) {
 
     // }
 
